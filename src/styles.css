@@ -1,0 +1,235 @@
+:root {
+  color-scheme: dark;
+  --bg: #0d1117;
+  --panel: #151b23;
+  --border: #2a3340;
+  --text: #d7dee7;
+  --muted: #8b96a3;
+  --accent: #6ea8fe;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  line-height: 1.7;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* 侧栏：章节导航 + 状态图例 */
+.sidebar {
+  flex: 0 0 220px;
+  padding: 20px 16px;
+  border-right: 1px solid var(--border);
+  background: var(--panel);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+
+.chapter-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chapter-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chapter-link:hover {
+  background: #1c242e;
+}
+
+.chapter-link.active {
+  background: #223148;
+  color: var(--accent);
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.status-unread {
+  background: #4a5563;
+}
+
+.status-read {
+  background: #d8a657;
+}
+
+.status-practiced {
+  background: #8ec07c;
+}
+
+.legend {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 主区：桌面左右两栏（文档 | 练习），窄屏上下（先文档后练习） */
+.main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  padding: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .app {
+    flex-direction: column;
+  }
+  .sidebar {
+    position: static;
+    height: auto;
+    flex: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.doc h1 {
+  margin-top: 0;
+}
+
+.doc h2 {
+  font-size: 17px;
+  margin: 24px 0 8px;
+  color: var(--accent);
+}
+
+.doc p {
+  margin: 8px 0;
+}
+
+.doc pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  font-size: 13px;
+}
+
+/* 练习区：高度固定，布局不随内容跳动 */
+.exercise-panel {
+  position: sticky;
+  top: 24px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+@media (max-width: 900px) {
+  .exercise-panel {
+    position: static;
+  }
+}
+
+.exercise-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.exercise-header h2 {
+  font-size: 15px;
+  margin: 0;
+}
+
+.exercise-canvas {
+  height: 360px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #10141a;
+}
+
+.exercise-canvas canvas {
+  display: block;
+}
+
+.exercise-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.exercise-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.exercise-controls button,
+.ghost-button {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #1c242e;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.exercise-controls button:hover,
+.ghost-button:hover {
+  border-color: var(--accent);
+}
+
+.exercise-note {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 12px 0 0;
+}
